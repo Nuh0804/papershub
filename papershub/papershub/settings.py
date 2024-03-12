@@ -30,6 +30,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1:3000'
+]
+
 
 # Application definition
 
@@ -41,12 +45,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
     'djoser',
     'learning_system', 
     'myusers'
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -81,10 +87,14 @@ WSGI_APPLICATION = 'papershub.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+   'default': {
+      'ENGINE': 'django.db.backends.postgresql',
+       'NAME': 'papershub',
+       'HOST': 'localhost',
+       'USER': 'postgres',
+       'PASSWORD': 'nuhusaidi',
+       'PORT': '5432'
+   }
 }
 
 
@@ -138,9 +148,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ]
+
 }
 
 SIMPLE_JWT = {
@@ -152,6 +160,6 @@ SIMPLE_JWT = {
 DJOSER = {
     'SERIALIZERS':{
         'user_create': 'myusers.serializers.UserCreaterSerializer',
-        'current_user': 'myusers.serializers.CurrentUserSerializer'
+        'current_user': 'myusers.serializers.CurrentUserSerializer',
     }
 }
