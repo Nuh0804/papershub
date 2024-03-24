@@ -89,10 +89,10 @@ WSGI_APPLICATION = 'papershub.wsgi.application'
 DATABASES = {
    'default': {
       'ENGINE': 'django.db.backends.postgresql',
-       'NAME': 'papershub',
+       'NAME': os.environ.get('DB_NAME'),
        'HOST': 'localhost',
-       'USER': 'postgres',
-       'PASSWORD': 'nuhusaidi',
+       'USER': os.environ.get('DB_USER'),
+       'PASSWORD': os.environ.get('DB_PASS'),
        'PORT': '5432'
    }
 }
@@ -148,16 +148,36 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-
 }
 
 SIMPLE_JWT = {
-   'AUTH_HEADER_TYPES': ('JWT',),
-       'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
-       'REFRESH_TOKEN_LIFETIME': timedelta(hours=2),
+    'AUTH_HEADER_TYPES': ('JWT',),
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(hours=2),
+    'ROTATE_REFRESH_TOKENS': True,
+    'UODATE_LAST_LOGIN': False
 }
 
+#email configurations
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_USE_TLS = True
+
+#djoser configurations
 DJOSER = {
+    'LOGIN_FIELD': 'email',
+    'ACTIVATION_URL' : 'auth/users/activation/{uid}/{token}',
+    "SEND_ACTIVATION_EMAIL": True,
+    'SEND_CONFIRMATION_EMAIL': True,
+    "PASSWORD_RESET_CONFIRM_URL": "password-reset/{uid}/{token}",
+    'PASSWORD_RESET_CONFIRM_RETYPE': True,
+    'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION':True,
+    'SET_PASSWORD_RETYPE': True,
     'SERIALIZERS':{
         'user_create': 'myusers.serializers.UserCreaterSerializer',
         'current_user': 'myusers.serializers.CurrentUserSerializer',
