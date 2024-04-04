@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from .serializers import *
@@ -6,6 +5,10 @@ from .models import *
 from .permissions import IsAdminOrReadOnly
 
 # Create your views here.
+class DegreeViewset(ModelViewSet):
+    
+    queryset = DegreeProgram.objects.all()
+    serializer_class = DegreeProgramSerializer
 
 class CourseViewset(ModelViewSet):
     permission_classes = [IsAdminOrReadOnly, IsAuthenticated]

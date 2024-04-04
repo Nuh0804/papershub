@@ -1,12 +1,24 @@
 from django.db import models
 from uuid import uuid4
 from django.core.validators import FileExtensionValidator
+from django.conf import settings
 
 # Create your models here.
+class DegreeProgram(models.Model):
+    id = models.CharField(max_length=255, unique=True, primary_key=True)
+    degree_name = models.CharField(max_length=255)
+
+    def __str__(self) -> str:
+        return f'{self.id}'
+    
+    
+
 class Course(models.Model):
     id = models.CharField(primary_key = True, max_length = 255)
     name = models.CharField( max_length = 255)
+    degree_id = models.ForeignKey(DegreeProgram, on_delete=models.CASCADE)
     description = models.TextField()
+    year_taught = models.IntegerField(choices=((1, 'Year 1'), (2, 'Year 2'), (3, 'Year 3'), (4, 'Year 4')))
 
     def __str__(self) -> str:
         return f'{self.id}'

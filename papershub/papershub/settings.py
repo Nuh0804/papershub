@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 from datetime import timedelta
-from learning_system.permissions import IsAdminOrReadOnly
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -154,7 +153,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=7),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'BLACKLIST_AFTER_ROTATION' : True,
 
@@ -181,7 +180,7 @@ EMAIL_USE_TLS = True
 #djoser configurations
 DJOSER = {
     'LOGIN_FIELD': 'email',
-    'ACTIVATION_URL' : 'auth/users/activation/{uid}/{token}',
+    'ACTIVATION_URL' : 'api/activation/{uid}/{token}',
     "SEND_ACTIVATION_EMAIL": True,
     'SEND_CONFIRMATION_EMAIL': True,
     "PASSWORD_RESET_CONFIRM_URL": "password-reset/{uid}/{token}",
