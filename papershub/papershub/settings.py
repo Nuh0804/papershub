@@ -193,3 +193,6 @@ DJOSER = {
         'current_user': 'myusers.serializers.CurrentUserSerializer',
     }
 }
+
+# DOMAIN = 'localhost:3000'
+SITE_NAME = "Papershub"
