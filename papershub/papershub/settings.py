@@ -30,7 +30,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:3000'
+    'http://127.0.0.1:3000',
+    'http://localhost:3000'
 ]
 #NEW
 CORS_ALLOW_CREDENTIALS = True
@@ -180,7 +181,8 @@ EMAIL_USE_TLS = True
 #djoser configurations
 DJOSER = {
     'LOGIN_FIELD': 'email',
-    'ACTIVATION_URL' : 'api/activation/{uid}/{token}',
+    # 'ACTIVATION_URL' : 'api/activation/{uid}/{token}',
+    'ACTIVATION_URL' : 'activate.html?uid={uid}&token={token}',
     "SEND_ACTIVATION_EMAIL": True,
     'SEND_CONFIRMATION_EMAIL': True,
     "PASSWORD_RESET_CONFIRM_URL": "password-reset/{uid}/{token}",
@@ -194,5 +196,5 @@ DJOSER = {
     }
 }
 
-# DOMAIN = 'localhost:3000'
+DOMAIN = 'localhost:3000'
 SITE_NAME = "Papershub"

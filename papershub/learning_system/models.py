@@ -4,6 +4,8 @@ from django.core.validators import FileExtensionValidator
 from django.conf import settings
 
 # Create your models here.
+
+
 class DegreeProgram(models.Model):
     id = models.CharField(max_length=255, unique=True, primary_key=True)
     degree_name = models.CharField(max_length=255)
@@ -12,6 +14,8 @@ class DegreeProgram(models.Model):
         return f'{self.id}'
     
     
+
+
 
 class Course(models.Model):
     id = models.CharField(primary_key = True, max_length = 255)

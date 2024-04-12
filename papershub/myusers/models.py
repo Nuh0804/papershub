@@ -5,12 +5,7 @@ from .usermanage import MyUserManager
 # Create your models here.
 
 class User(AbstractUser):
-    degree_choices = {
-        'CEIT': 'Computer Engineering and Information Technology',
-        "CS": "Computer Science",
-        "BIT" : "business Information Technology",
-
-    }
+    choices=((1, 'Year 1'), (2, 'Year 2'), (3, 'Year 3'), (4, 'Year 4'))
     
     first_name = models.CharField(max_length= 255)
     last_name =  models.CharField(max_length= 255)
@@ -19,6 +14,7 @@ class User(AbstractUser):
     phone_number = models.CharField(unique=True, max_length= 10)
     password = models.CharField(max_length = 255)
     degree_program = models.ForeignKey(DegreeProgram, on_delete=models.CASCADE, blank=True, null=True)
+    year = models.IntegerField(choices=choices)
     
 
     USERNAME_FIELD = 'email'

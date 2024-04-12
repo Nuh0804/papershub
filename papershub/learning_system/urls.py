@@ -18,9 +18,8 @@ tutorialrouter.register('tutorial', TutorialViewset, basename='tutorial')
 papersrouter = NestedDefaultRouter(router, 'Course', lookup = 'course')
 papersrouter.register('pastpaper', PastpaperViewset, basename='pastpaper')
 
-# userprofilerouter = routers.DefaultRouter()
-# router.register('profile', UserProfileView, basename='profile')
 
 
 
-urlpatterns = router.urls + lecturerouter.urls + tutorialrouter.urls + papersrouter.urls + degreerouter.urls
+urlpatterns = router.urls + lecturerouter.urls + tutorialrouter.urls + papersrouter.urls + degreerouter.urls 
+

@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.fields import CurrentUserDefault, empty
 from .models import *
 
 class DegreeProgramSerializer(serializers.ModelSerializer):
@@ -8,10 +9,14 @@ class DegreeProgramSerializer(serializers.ModelSerializer):
 
 
 
+
+   
+
 class CourseSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = Course
-        fields = ['id', 'name', 'description']
+        fields = ['id', 'name', 'description', 'degree_id', 'year_taught']
         
 
 class LectureSerializer(serializers.ModelSerializer):

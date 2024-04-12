@@ -1,5 +1,9 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from myusers.models import User
 from .serializers import *
 from .models import *
 from .permissions import IsAdminOrReadOnly
@@ -12,8 +16,12 @@ class DegreeViewset(ModelViewSet):
 
 class CourseViewset(ModelViewSet):
     permission_classes = [IsAdminOrReadOnly, IsAuthenticated]
-    queryset = Course.objects.all()
+    def get_queryset(self):
+        user = self.request.user
+        profile = User.objects.filter(id = user.id).first()
+        return Course.objects.filter(degree_id_id = profile.degree_program, year_taught = profile.year)
     serializer_class = CourseSerializer
+
 
 
 class LectureViewset(ModelViewSet):
