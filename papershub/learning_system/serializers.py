@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from rest_framework.fields import CurrentUserDefault, empty
 from .models import *
 
 class DegreeProgramSerializer(serializers.ModelSerializer):
@@ -7,10 +6,6 @@ class DegreeProgramSerializer(serializers.ModelSerializer):
         model = DegreeProgram
         fields = '__all__'
 
-
-
-
-   
 
 class CourseSerializer(serializers.ModelSerializer):
     

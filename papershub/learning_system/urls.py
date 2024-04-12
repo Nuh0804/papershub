@@ -1,7 +1,6 @@
 from rest_framework import routers
 from rest_framework_nested.routers import NestedDefaultRouter
 from .views import *
-from django.urls import path, include
 
 router = routers.DefaultRouter()
 router.register('Course', CourseViewset, basename='course')
