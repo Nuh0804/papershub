@@ -168,7 +168,6 @@ SIMPLE_JWT = {
 }
 
 
-
 #email configurations
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -178,10 +177,10 @@ EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_USE_TLS = True
 
+
 #djoser configurations
 DJOSER = {
     'LOGIN_FIELD': 'email',
-    # 'ACTIVATION_URL' : 'api/activation/{uid}/{token}',
     'ACTIVATION_URL' : 'activate.html?uid={uid}&token={token}',
     "SEND_ACTIVATION_EMAIL": True,
     'SEND_CONFIRMATION_EMAIL': True,

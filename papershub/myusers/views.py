@@ -1,6 +1,8 @@
 from django.conf import settings
 from rest_framework.request import Request
 from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework.status import HTTP_200_OK, HTTP_401_UNAUTHORIZED
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 
@@ -8,6 +10,10 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     def post(self, request: Request, *args, **kwargs) -> Response:
         response = super().post(request, *args, **kwargs)
         access_token= response.data['access']
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid():
+            user = serializer.user
         response.set_cookie(
             key=settings.SIMPLE_JWT['AUTH_COOKIE'],
             value=access_token,
@@ -18,21 +24,17 @@ class CustomTokenObtainPairView(TokenObtainPairView):
             httponly=settings.SIMPLE_JWT["AUTH_COOKIE_HTTP_ONLY"],
             samesite=settings.SIMPLE_JWT["AUTH_COOKIE_SAMESITE"],
         )
-        return response
+        return Response({
+            **serializer.validated_data,
+            **{
+                "email": user.email,
+                "program": str(user.degree_program),
+                "year": user.year,
+                }
+            },
+            status=HTTP_200_OK
+            )
 
 
 
-# class ActivateUser(UserViewSet):
 
-#     def get_serializer(self, *args, **kwargs):
-#         serializer_class = self.get_serializer_class()
-#         kwargs.setdefault('context', self.get_serializer_context())
- 
-#         kwargs['data'] = {"uid": self.kwargs['uid'], "token": self.kwargs['token']}
- 
-#         return serializer_class(*args, **kwargs)
- 
-#     def activation(self, request, uid, token, *args, **kwargs):
-#         super().activation(request, *args, **kwargs)
-#         return Response(status=status.HTTP_204_NO_CONTENT)
-    
