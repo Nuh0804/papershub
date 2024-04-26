@@ -7,5 +7,5 @@ class UserCreaterSerializer(UserCreateSerializer):
 
 class CurrentUserSerializer(UserSerializer):
    class Meta(UserSerializer.Meta):
-      fields = ['email', 'id','first_name', 'last_name']
+      fields = ['email', 'id','first_name', 'last_name', 'degree_program', 'year']
       

@@ -13,27 +13,25 @@ class DegreeProgram(models.Model):
     def __str__(self) -> str:
         return f'{self.id}'
     
-    
+class Year(models.Model):
+    id = models.IntegerField(primary_key=True)
+
+    def __str__(self) -> str:
+        return f'{self.id}'
+
 class Course(models.Model):
     id = models.CharField(primary_key = True, max_length = 255)
     name = models.CharField( max_length = 255)
-    degree_id = models.ForeignKey(DegreeProgram, on_delete=models.CASCADE)
+    degree_id = models.ManyToManyField(DegreeProgram)
     description = models.TextField()
-    year_taught = models.IntegerField(choices=((1, 'Year 1'), (2, 'Year 2'), (3, 'Year 3'), (4, 'Year 4')))
+    year_taught = models.ManyToManyField(Year)
+    semester = models.IntegerField(choices={1: 'first', 2 : 'second'})
+    notes = models.TextField(max_length=255)
 
     def __str__(self) -> str:
         return f'{self.id}'
     
 
-class Lecture(models.Model):
-    id = models.UUIDField(primary_key = True, default= uuid4, editable = False, 
-        unique=True)
-    course_id = models.ForeignKey(Course, on_delete = models.CASCADE)
-    title = models.CharField(max_length = 255)
-    file = models.FileField(upload_to='lecture_notes/', validators=[FileExtensionValidator(allowed_extensions=['pdf', 'png'])])
-
-    def __str__(self) -> str:
-        return f'{self.title}'
 
 class Tutorial(models.Model):
     id = models.UUIDField(primary_key = True, default= uuid4, editable = False, 

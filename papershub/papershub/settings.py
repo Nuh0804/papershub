@@ -150,6 +150,7 @@ AUTH_USER_MODEL = 'myusers.User'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'myusers.authenticate.CustomAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
     ],
 }
 
