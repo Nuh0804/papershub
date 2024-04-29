@@ -19,13 +19,19 @@ class Year(models.Model):
     def __str__(self) -> str:
         return f'{self.id}'
 
+class Semester(models.Model):
+    id = models.IntegerField(primary_key=True)
+
+    def __str__(self) -> str:
+        return f"{self.id}"
+
 class Course(models.Model):
     id = models.CharField(primary_key = True, max_length = 255)
     name = models.CharField( max_length = 255)
     degree_id = models.ManyToManyField(DegreeProgram)
     description = models.TextField()
     year_taught = models.ManyToManyField(Year)
-    semester = models.IntegerField(choices={1: 'first', 2 : 'second'})
+    semester = models.ManyToManyField(Semester)
     notes = models.TextField(max_length=255)
 
     def __str__(self) -> str:
