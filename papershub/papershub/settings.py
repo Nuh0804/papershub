@@ -185,7 +185,7 @@ DJOSER = {
     'ACTIVATION_URL' : 'activate.html?uid={uid}&token={token}',
     "SEND_ACTIVATION_EMAIL": True,
     'SEND_CONFIRMATION_EMAIL': True,
-    "PASSWORD_RESET_CONFIRM_URL": "password-reset/{uid}/{token}",
+    "PASSWORD_RESET_CONFIRM_URL": 'forgot-password.html?uid={uid}&token={token}',
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
     'PASSWORD_CHANGED_EMAIL_CONFIRMATION':True,
@@ -198,3 +198,9 @@ DJOSER = {
 
 DOMAIN = 'localhost:3000'
 SITE_NAME = "Papershub"
+
+#payment configurations
+
+CLIENT_ID = os.environ.get('AZAMPAY_CLIENT_ID')
+CLIENT_SECRET_KEY = os.environ.get('AZAMPAY_SECRET_CLIENT_KEY')
+TOKEN = os.environ.get('AZAMPAY_TOKEN')

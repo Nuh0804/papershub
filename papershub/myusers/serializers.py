@@ -1,4 +1,6 @@
 from djoser.serializers import UserCreateSerializer, UserSerializer
+from .models import Order
+from rest_framework import serializers
    
 
 class UserCreaterSerializer(UserCreateSerializer):
@@ -9,3 +11,8 @@ class CurrentUserSerializer(UserSerializer):
    class Meta(UserSerializer.Meta):
       fields = ['email', 'id','first_name', 'last_name', 'degree_program', 'year']
       
+
+class OrderSerializer(serializers.ModelSerializer):
+   class Meta:
+      model = Order
+      fields = "__all__"

@@ -1,10 +1,13 @@
 from django.conf import settings
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework_simplejwt.tokens import AccessToken
-from rest_framework.status import HTTP_200_OK, HTTP_401_UNAUTHORIZED
+from rest_framework.status import HTTP_200_OK
+from rest_framework.decorators import api_view, action
+from rest_framework.viewsets import ModelViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView
-
+from .serializers import OrderSerializer
+from .models import Order
+from .payment_functions import azampay_mno_checkout, generate_token
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     def post(self, request: Request, *args, **kwargs) -> Response:
@@ -37,3 +40,56 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
 
 
+
+
+
+class OrderViewset(ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+    # @action(detail=False, methods=['POST'])
+    # def token(self, request):
+    #     auth_base_url =  "https://authenticator-sandbox.azampay.co.tz"# Replace with your actual base URL
+    #     app_name = "papershub"
+    #     client_id = settings.CLIENT_ID 
+    #     client_secret = settings.CLIENT_SECRET_KEY
+
+    #     token_data = generate_token(auth_base_url, app_name, client_id, client_secret)
+        
+    #     data = {
+    #         "msg": "payment was successful",
+    #         "data": token_data
+    #     }
+    #     return Response(data)
+    
+
+    @action(detail=False, methods=["POST"])
+    def pay(self, request):
+
+        #generate token for authorization 
+        auth_base_url =  "https://authenticator-sandbox.azampay.co.tz"# Replace with your actual base URL
+        app_name = "papershub"
+        client_id = settings.CLIENT_ID 
+        client_secret = settings.CLIENT_SECRET_KEY
+
+        token_data = generate_token(auth_base_url, app_name, client_id, client_secret)
+        # Access the access token
+        token = token_data.get('data', {}).get('accessToken', None)
+
+        #payment
+        base_url =  "https://sandbox.azampay.co.tz"# Replace with your actual base URL
+        api_key = settings.CLIENT_SECRET_KEY
+        account_number = "1292-123"
+        amount = '2000.0'
+        currency = "TZS"
+        external_id = "123"
+        provider='Tigo'
+        additional_properties = {"property1": None, "property2": None}
+
+        payment_data = azampay_mno_checkout(base_url, token, api_key, account_number, amount, currency, external_id, provider, additional_properties)
+        
+        data = {
+            "msg": "payment was successful",
+            "data": payment_data
+        }
+        return Response(data)  
