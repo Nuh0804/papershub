@@ -1,7 +1,8 @@
 from django.conf import settings
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.status import HTTP_200_OK
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, action
 from rest_framework.viewsets import ModelViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -35,61 +36,65 @@ class CustomTokenObtainPairView(TokenObtainPairView):
                 "year": user.year,
                 }
             },
-            status=HTTP_200_OK
+            status=status.HTTP_200_OK
             )
 
 
 
-
-
-
 class OrderViewset(ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Order.objects.all()
-    serializer_class = OrderSerializer
-
-    # @action(detail=False, methods=['POST'])
-    # def token(self, request):
-    #     auth_base_url =  "https://authenticator-sandbox.azampay.co.tz"# Replace with your actual base URL
-    #     app_name = "papershub"
-    #     client_id = settings.CLIENT_ID 
-    #     client_secret = settings.CLIENT_SECRET_KEY
-
-    #     token_data = generate_token(auth_base_url, app_name, client_id, client_secret)
-        
-    #     data = {
-    #         "msg": "payment was successful",
-    #         "data": token_data
-    #     }
-    #     return Response(data)
+    serializer_class = OrderSerializer   
     
 
     @action(detail=False, methods=["POST"])
     def pay(self, request):
+        user = self.request.user
+        data = request.data
 
-        #generate token for authorization 
-        auth_base_url =  "https://authenticator-sandbox.azampay.co.tz"# Replace with your actual base URL
-        app_name = "papershub"
-        client_id = settings.CLIENT_ID 
+        # Generate token for authorization
+        auth_base_url = settings.AUTH_BASE_URL  
+        app_name = settings.APP_NAME
+        client_id = settings.CLIENT_ID
         client_secret = settings.CLIENT_SECRET_KEY
 
-        token_data = generate_token(auth_base_url, app_name, client_id, client_secret)
-        # Access the access token
-        token = token_data.get('data', {}).get('accessToken', None)
+        try:
+            token_data = generate_token(auth_base_url, app_name, client_id, client_secret)
+            token = token_data.get('data', {}).get('accessToken', None)
+            print(token)
 
-        #payment
-        base_url =  "https://sandbox.azampay.co.tz"# Replace with your actual base URL
-        api_key = settings.CLIENT_SECRET_KEY
-        account_number = "1292-123"
-        amount = '2000.0'
-        currency = "TZS"
-        external_id = "123"
-        provider='Tigo'
-        additional_properties = {"property1": None, "property2": None}
+            if not token:
+                return Response({"error": "Failed to generate access token"}, status=status.HTTP_400_BAD_REQUEST)
 
-        payment_data = azampay_mno_checkout(base_url, token, api_key, account_number, amount, currency, external_id, provider, additional_properties)
-        
-        data = {
-            "msg": "payment was successful",
-            "data": payment_data
-        }
-        return Response(data)  
+            # Payment
+            account_number = data["phone_number"]
+            provider = data["provider"]
+            base_url = settings.BASE_URL 
+            api_key = settings.CLIENT_SECRET_KEY
+            amount = '2000.0'
+            currency = "TZS"
+            external_id = "123"
+
+            payment_data = azampay_mno_checkout(base_url, token, api_key, account_number, amount, currency, external_id, provider)
+
+            if not payment_data:  # Check if payment_data is None
+                return Response({"error": "Payment processing failed"}, status=status.HTTP_400_BAD_REQUEST)
+
+            transaction_id = payment_data.get('transactionId')
+
+            if not transaction_id:
+                return Response({"error": "Payment processing failed"}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Order creation and successful response
+            serializer = OrderSerializer(data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save(transaction_id=transaction_id, user=user, pending_status = "C")
+                return Response({
+                    "msg": "payment was successful",
+                    "data": payment_data
+                })
+
+        except Exception as e:  # Catch any unexpected errors
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+ 

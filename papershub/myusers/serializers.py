@@ -15,4 +15,4 @@ class CurrentUserSerializer(UserSerializer):
 class OrderSerializer(serializers.ModelSerializer):
    class Meta:
       model = Order
-      fields = "__all__"
+      fields = ["user", "phone_number", "provider"]

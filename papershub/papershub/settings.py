@@ -204,3 +204,6 @@ SITE_NAME = "Papershub"
 CLIENT_ID = os.environ.get('AZAMPAY_CLIENT_ID')
 CLIENT_SECRET_KEY = os.environ.get('AZAMPAY_SECRET_CLIENT_KEY')
 TOKEN = os.environ.get('AZAMPAY_TOKEN')
+BASE_URL = os.environ.get('BASE_URL')
+AUTH_BASE_URL = os.environ.get('AUTH_BASE_URL')
+APP_NAME = os.environ.get('APP_NAME')
