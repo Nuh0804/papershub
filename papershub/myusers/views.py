@@ -61,7 +61,6 @@ class OrderViewset(ModelViewSet):
         try:
             token_data = generate_token(auth_base_url, app_name, client_id, client_secret)
             token = token_data.get('data', {}).get('accessToken', None)
-            print(token)
 
             if not token:
                 return Response({"error": "Failed to generate access token"}, status=status.HTTP_400_BAD_REQUEST)
@@ -88,7 +87,7 @@ class OrderViewset(ModelViewSet):
             # Order creation and successful response
             serializer = OrderSerializer(data=request.data)
             if serializer.is_valid(raise_exception=True):
-                serializer.save(transaction_id=transaction_id, user=user, pending_status = "C")
+                serializer.save(transaction_id=transaction_id, user=user)
                 return Response({
                     "msg": "payment was successful",
                     "data": payment_data
