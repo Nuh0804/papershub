@@ -12,7 +12,3 @@ class CurrentUserSerializer(UserSerializer):
       fields = ['email', 'id','first_name', 'last_name', 'degree_program', 'year']
       
 
-class OrderSerializer(serializers.ModelSerializer):
-   class Meta:
-      model = Order
-      fields = ["user", "phone_number", "provider"]

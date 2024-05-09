@@ -27,14 +27,26 @@ SECRET_KEY = 'django-insecure-nd)e03wmz1ze@rq$4hz_lo^%utqm_%_2$ruv3v7yl%mjhlf56v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",  # Add other methods your frontend uses (PUT, DELETE, etc.)
+]
+
+CORS_ALLOW_HEADERS = [
+    "Content-Type",
+    "Authorization",  # Add any additional headers your API requires
+]
+
 
 CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:3000',
-    'http://localhost:3000'
+    'http://localhost:3000',
+    "https://papershub.netlify.app",
 ]
 #NEW
 CORS_ALLOW_CREDENTIALS = True
+
 
 
 # Application definition

@@ -16,6 +16,7 @@ class User(AbstractUser):
     password = models.CharField(max_length = 255)
     degree_program = models.ForeignKey(DegreeProgram, on_delete=models.CASCADE, blank=True, null=True)
     year = models.IntegerField(choices=choices)
+    subscribed = models.BooleanField(default=False)
     
 
     USERNAME_FIELD = 'email'
@@ -26,24 +27,3 @@ class User(AbstractUser):
         return self.email
 
 
-class Order(models.Model):
-
-    Tigo = "Tigo"
-    Mpesa = "Mpesa"
-    Airtel = "Airtel"
-    Halopesa = "Halopesa"
-    Azampesa = "Azampesa"
-    
-    PROVIDER_CHOICES = [
-        (Tigo , "Tigo"),
-        (Mpesa , "Mpesa"),
-        (Airtel , "Airtel"),
-        (Halopesa , "Halopesa"),
-        (Azampesa , "Azampesa")
-    ]
-    placed_at = models.DateTimeField(auto_now_add=True)
-    ordertoken = models.UUIDField(primary_key=True, default=uuid4, unique= True, editable=False)
-    transaction_id = models.CharField()
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
-    phone_number = models.CharField(max_length= 10)
-    provider = models.CharField(choices=PROVIDER_CHOICES, max_length=50)

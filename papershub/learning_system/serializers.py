@@ -18,12 +18,6 @@ class CourseSerializer(serializers.ModelSerializer):
 
 
 
-class TutorialSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Tutorial
-        fields = ['id', 'title', 'course_id', 'file']
-
-
 class PastPaperSerializer(serializers.ModelSerializer):
     class Meta:
         model = PastPaper

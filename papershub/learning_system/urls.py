@@ -6,9 +6,7 @@ from .views import *
 
 router = routers.DefaultRouter()
 router.register('Course', CourseViewset, basename="Course")
-router.register('tutorial', TutorialViewset, basename='tutorial')
 router.register("program", DegreeViewset, basename="degree")
-router.register("paper", PastpaperViewset, basename="paper")
 
 paperrouter = NestedDefaultRouter(router, "Course", lookup = 'course')
 paperrouter.register("paper", PastpaperViewset, basename='paper')

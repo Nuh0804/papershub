@@ -11,7 +11,3 @@ urlpatterns = [
 
 ]
 
-router = DefaultRouter()
-router.register("order", OrderViewset, basename='order')
-
-urlpatterns += router.urls
