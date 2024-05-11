@@ -15,7 +15,7 @@ class User(AbstractUser):
     phone_number = models.CharField(unique=True, max_length= 10)
     password = models.CharField(max_length = 255)
     degree_program = models.ForeignKey(DegreeProgram, on_delete=models.CASCADE, blank=True, null=True)
-    year = models.IntegerField(choices=choices)
+    year = models.IntegerField(choices=choices, default=0)
     subscribed = models.BooleanField(default=False)
     
 
