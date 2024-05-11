@@ -5,6 +5,11 @@ from .common import *
 
 DEBUG = False
 
+CORS_ALLOWED_ORIGINS = [
+    "papershub.co.tz",
+    "https://papershub.co.tz",
+]
+
 SECRET_KEY = os.environ['SECRET_KEY']
 
 ALLOWED_HOSTS = ['papershub-prod-ee9f6b8e1268.herokuapp.com']

@@ -5,3 +5,11 @@ from .models import *
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
     list_display = ('id', "name",)
+
+
+@admin.register(PastPaper)
+class PastPaperAdmin(admin.ModelAdmin):
+    list_display = ("id", "course", "title", "file", "solution", "is_free")
+    list_select_related = ["course"]
+    list_per_page = 10
+    search_fields = ["title"]

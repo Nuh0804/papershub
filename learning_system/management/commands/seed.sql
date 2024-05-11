@@ -1,0 +1,1 @@
+DELETE FROM learning_system_pastpaper;
