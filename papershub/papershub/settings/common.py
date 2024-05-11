@@ -21,8 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-nd)e03wmz1ze@rq$4hz_lo^%utqm_%_2$ruv3v7yl%mjhlf56v'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -101,16 +100,7 @@ WSGI_APPLICATION = 'papershub.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-   'default': {
-      'ENGINE': 'django.db.backends.postgresql',
-       'NAME': os.environ.get('DB_NAME'),
-       'HOST': 'localhost',
-       'USER': os.environ.get('DB_USER'),
-       'PASSWORD': os.environ.get('DB_PASS'),
-       'PORT': '5432'
-   }
-}
+
 
 
 # Password validation
@@ -211,11 +201,29 @@ DJOSER = {
 DOMAIN = 'localhost:3000'
 SITE_NAME = "Papershub"
 
-#payment configurations
-
-CLIENT_ID = os.environ.get('AZAMPAY_CLIENT_ID')
-CLIENT_SECRET_KEY = os.environ.get('AZAMPAY_SECRET_CLIENT_KEY')
-TOKEN = os.environ.get('AZAMPAY_TOKEN')
-BASE_URL = os.environ.get('BASE_URL')
-AUTH_BASE_URL = os.environ.get('AUTH_BASE_URL')
-APP_NAME = os.environ.get('APP_NAME')
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler'
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': 'general.log',
+            'formatter': 'verbose'
+        }
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console', 'file'],
+            'level': os.environ.get('DJANGO_LOG_LEVEL', 'INFO')
+        }
+    },
+    'formatters': {
+        'verbose': {
+            'format': '{asctime} ({levelname}) - {name} - {message}',
+            'style': '{' 
+        }
+    }
+}
