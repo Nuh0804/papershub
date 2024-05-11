@@ -6,4 +6,4 @@ DEBUG = False
 
 SECRET_KEY = os.environ['SECRET_KEY']
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['papershub-prod-ee9f6b8e1268.herokuapp.com']
