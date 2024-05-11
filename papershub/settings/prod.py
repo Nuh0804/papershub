@@ -6,7 +6,6 @@ from .common import *
 DEBUG = False
 
 CORS_ALLOWED_ORIGINS = [
-    "papershub.co.tz",
     "https://papershub.co.tz",
 ]
 
