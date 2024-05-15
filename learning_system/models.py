@@ -36,7 +36,7 @@ class PastPaper(models.Model):
         unique=True)
     course = models.ForeignKey(Course, on_delete = models.CASCADE)
     title = models.CharField(max_length = 255)
-    file = models.FileField(upload_to='past papers/', validators=[FileExtensionValidator(allowed_extensions=['pdf', 'png'])])
+    file = models.FileField(upload_to='past papers/', validators=[FileExtensionValidator(allowed_extensions=['pdf', 'png', 'jpg'])])
     solution = models.FileField(blank=True, null=True, upload_to='solutions/', validators=[FileExtensionValidator(allowed_extensions=['pdf', 'png'])])
     is_free = models.BooleanField(default=False)
 

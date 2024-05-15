@@ -21,4 +21,4 @@ class CourseSerializer(serializers.ModelSerializer):
 class PastPaperSerializer(serializers.ModelSerializer):
     class Meta:
         model = PastPaper
-        fields = ['id', 'title', 'course', 'file', 'solution']
+        fields = ['id', 'title', 'course', 'file', 'solution', 'is_free']
