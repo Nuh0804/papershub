@@ -12,10 +12,10 @@ SECRET_KEY = 'django-insecure-nd)e03wmz1ze@rq$4hz_lo^%utqm_%_2$ruv3v7yl%mjhlf56v
 DATABASES = {
    'default': {
       'ENGINE': 'django.db.backends.postgresql',
-       'NAME': 'papershub',
+       'NAME': os.getenv('DB_NAME'),
        'HOST': 'localhost',
-       'USER': 'postgres',
-       'PASSWORD': 'nuhusaidi',
+       'USER': os.getenv('DB_USER'),
+       'PASSWORD': os.getenv('DB_PASS'),
        'PORT': '5432'
    }
 }

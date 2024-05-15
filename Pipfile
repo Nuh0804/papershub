@@ -17,6 +17,8 @@ django-cors-headers = "*"
 gunicorn = "*"
 whitenoise = "*"
 dj-database-url = "*"
+python-dotenv = "*"
+django-cloudinary-storage = "*"
 
 [dev-packages]
 
