@@ -12,7 +12,7 @@ class PastPaperAdmin(admin.ModelAdmin):
     list_display = ("id", "course", "title", "file", "solution", "is_free")
     list_select_related = ["course"]
     list_per_page = 10
-    search_fields = ["title"]
+    search_fields = ["title", "file", "course"]
 
 
 @admin.register(DegreeProgram)
