@@ -154,13 +154,13 @@ SIMPLE_JWT = {
 }
 
 
-#email configurations
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
-EMAIL_PORT = 587
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-EMAIL_USE_TLS = True
+# SERVER_EMAIL = os.environ['MAILGUN_SMTP_SERVER']
+# EMAIL_HOST = os.environ['MAILGUN_SMTP_LOGIN']
+# EMAIL_HOST_USER = os.environ['MAILGUN_SMTP_LOGIN']
+# EMAIL_HOST_PASSWORD = os.environ['MAILGUN_SMTP_PASSWORD']
+# EMAIL_PORT = os.environ["MAILGUN_SMTP_PORT"]
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# EMAIL_USE_TLS = True
 
 
 #djoser configurations
@@ -180,8 +180,6 @@ DJOSER = {
     }
 }
 
-DOMAIN = 'localhost:3000'
-SITE_NAME = "Papershub"
 
 LOGGING = {
     'version': 1,

@@ -28,8 +28,5 @@ class PastpaperViewset(ModelViewSet):
     permission_classes = [IsAdminOrReadOnly, IsAuthenticated]
     serializer_class = PastPaperSerializer
     def get_queryset(self):
-        user = self.request.user
         course_id = self.kwargs['course_pk']
-        if user.subscribed==False:
-            return PastPaper.objects.filter(course_id = course_id, is_free = True)
         return PastPaper.objects.filter(course_id = course_id)
