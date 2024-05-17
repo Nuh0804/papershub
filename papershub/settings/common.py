@@ -25,7 +25,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 load_dotenv()
 
-#NEW
 CORS_ALLOW_CREDENTIALS = True
 
 
@@ -40,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework_simplejwt.token_blacklist', #NEW
+    'rest_framework_simplejwt.token_blacklist', 
     'corsheaders',
     'djoser',
     'cloudinary_storage',
@@ -137,32 +136,23 @@ AUTH_USER_MODEL = 'myusers.User'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'myusers.authenticate.CustomAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
     ],
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'BLACKLIST_AFTER_ROTATION' : True,
 
     #custom
-    "AUTH_COOKIE": "access_token",  # cookie name
-    "AUTH_COOKIE_DOMAIN": None,  # specifies domain for which the cookie will be sent
-    "AUTH_COOKIE_SECURE": False,  # restricts the transmission of the cookie to only occur over secure (HTTPS) connections. 
-    "AUTH_COOKIE_HTTP_ONLY": True,  # prevents client-side js from accessing the cookie
-    "AUTH_COOKIE_PATH": "/",  # URL path where cookie will be sent
-    "AUTH_COOKIE_SAMESITE": "Lax",  # specifies whether the cookie should be sent in cross site requests
+    "AUTH_COOKIE": "access_token",  
+    "AUTH_COOKIE_DOMAIN": None,  
+    "AUTH_COOKIE_SECURE": False,  
+    "AUTH_COOKIE_HTTP_ONLY": True,  
+    "AUTH_COOKIE_PATH": "/",  
+    "AUTH_COOKIE_SAMESITE": "Lax",  
 }
 
-
-# SERVER_EMAIL = os.environ['MAILGUN_SMTP_SERVER']
-# EMAIL_HOST = os.environ['MAILGUN_SMTP_LOGIN']
-# EMAIL_HOST_USER = os.environ['MAILGUN_SMTP_LOGIN']
-# EMAIL_HOST_PASSWORD = os.environ['MAILGUN_SMTP_PASSWORD']
-# EMAIL_PORT = os.environ["MAILGUN_SMTP_PORT"]
-# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-# EMAIL_USE_TLS = True
 
 
 #djoser configurations
