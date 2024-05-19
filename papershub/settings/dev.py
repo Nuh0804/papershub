@@ -8,7 +8,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
 ]
 
-SECRET_KEY = 'django-insecure-nd)e03wmz1ze@rq$4hz_lo^%utqm_%_2$ruv3v7yl%mjhlf56v'
+SECRET_KEY = os.getenv("DEV_SECRET")
 
 DATABASES = {
    'default': {
