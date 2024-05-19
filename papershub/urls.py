@@ -27,6 +27,7 @@ urlpatterns = [
     path('papershub/', include('learning_system.urls')),
     path('auth/',include('djoser.urls')),
     path('', include('myusers.urls')),
+    path('api/', include('djoser.urls.jwt')),
 ]
 
 if settings.DEBUG:
