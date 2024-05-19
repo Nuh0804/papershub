@@ -158,10 +158,10 @@ SIMPLE_JWT = {
 #djoser configurations
 DJOSER = {
     'LOGIN_FIELD': 'email',
-    'ACTIVATION_URL' : 'activate.html?uid={uid}&token={token}',
+    'ACTIVATION_URL' : 'activate?uid={uid}&token={token}',
     "SEND_ACTIVATION_EMAIL": True,
     'SEND_CONFIRMATION_EMAIL': True,
-    "PASSWORD_RESET_CONFIRM_URL": 'reset-password.html?uid={uid}&token={token}',
+    "PASSWORD_RESET_CONFIRM_URL": 'reset-password?uid={uid}&token={token}',
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
     'PASSWORD_CHANGED_EMAIL_CONFIRMATION':True,
@@ -169,7 +169,13 @@ DJOSER = {
     'SERIALIZERS':{
         'user_create': 'myusers.serializers.UserCreaterSerializer',
         'current_user': 'myusers.serializers.CurrentUserSerializer',
-    }
+    },
+    'EMAIL': {
+        'activation': 'learning_system.email.ActivationEmail',
+        'confirmation': 'learning_system.email.ConfirmationEmail',
+        'password_reset': 'learning_system.email.PasswordResetEmail',
+        'password_changed_confirmation': 'learning_system.email.PasswordChangedConfirmationEmail',
+    },
 }
 
 
